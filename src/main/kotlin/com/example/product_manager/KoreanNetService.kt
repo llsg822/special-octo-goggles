@@ -1,11 +1,13 @@
 package com.example.product_manager
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class KoreanNetService(
-   val koreanNetWebClient: WebClient
+   val koreanNetWebClient: WebClient,
+   val xmlMapper: ObjectMapper,
 ) {
     fun getProduct(gtin: String) {
         val response = koreanNetWebClient
@@ -15,6 +17,7 @@ class KoreanNetService(
             .bodyToMono(String::class.java)
             .block()
 
-        println(response)
+        val koreanNetResponse = xmlMapper.readValue(response, KoreanNetResponse::class.java)
+        println(koreanNetResponse)
     }
 }
