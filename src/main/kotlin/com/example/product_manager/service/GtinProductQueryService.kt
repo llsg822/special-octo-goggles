@@ -11,8 +11,8 @@ class GtinProductQueryService(
         val gtinProductRepository: GtinProductRepository,
 ) {
     fun getProduct(): List<GtinProductResponse> {
-        return gtinProductRepository.findAllWithProduct().map {
-            gtinProduct -> GtinProductResponse(
+        return gtinProductRepository.findAllWithProduct().map { gtinProduct ->
+            GtinProductResponse(
                     gtin = gtinProduct.gtin,
                     name = gtinProduct.product?.name,
                     imageUrl = gtinProduct.product?.imageUrl,

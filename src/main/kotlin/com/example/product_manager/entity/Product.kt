@@ -8,10 +8,10 @@ import java.util.UUID
 
 @Entity
 class Product(
-    @Id
-    val id: UUID = UUID.randomUUID(),
-    var name: String?,
-    var imageUrl: String?,
-    @ManyToOne(cascade = [CascadeType.PERSIST])
-    var category: Category?
+        @Id
+        val id: UUID = UUID.randomUUID(),
+        var name: String?,
+        var imageUrl: String?,
+        @ManyToOne(cascade = [CascadeType.PERSIST])
+        var category: Category?
 )

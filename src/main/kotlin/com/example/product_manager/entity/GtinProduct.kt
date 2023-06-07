@@ -8,12 +8,12 @@ import java.time.LocalDateTime
 
 @Entity
 class GtinProduct(
-    @Id
-    val gtin: String,
-    @OneToOne(cascade = [CascadeType.PERSIST])
-    var product: Product? = null,
-    var state: GtinProductSyncState = GtinProductSyncState.SYNC,
-    var synchronizedAt: LocalDateTime? = null,
+        @Id
+        val gtin: String,
+        @OneToOne(cascade = [CascadeType.PERSIST])
+        var product: Product? = null,
+        var state: GtinProductSyncState = GtinProductSyncState.SYNC,
+        var synchronizedAt: LocalDateTime? = null,
 ) {
     fun successToSynchronize(product: Product) {
         this.product = product;

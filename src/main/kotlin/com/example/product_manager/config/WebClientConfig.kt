@@ -17,21 +17,21 @@ class WebClientConfig(
     @Bean
     fun koreanNetWebClient(): WebClient {
         return WebClient
-            .builder()
-            .baseUrl("http://api.koreannet.or.kr")
-            .filter { request, next ->
-                val uri = UriComponentsBuilder
-                    .fromUri(request.url())
-                    .queryParam("id", koreanNetId)
-                    .queryParam("pw", koreanNetPw)
-                    .build()
-                    .toUri()
-                val filtered = ClientRequest.from(request)
-                    .url(uri)
-                    .build()
-                println(filtered.url())
-                next.exchange(filtered)
-            }
-            .build()
+                .builder()
+                .baseUrl("http://api.koreannet.or.kr")
+                .filter { request, next ->
+                    val uri = UriComponentsBuilder
+                            .fromUri(request.url())
+                            .queryParam("id", koreanNetId)
+                            .queryParam("pw", koreanNetPw)
+                            .build()
+                            .toUri()
+                    val filtered = ClientRequest.from(request)
+                            .url(uri)
+                            .build()
+                    println(filtered.url())
+                    next.exchange(filtered)
+                }
+                .build()
     }
 }

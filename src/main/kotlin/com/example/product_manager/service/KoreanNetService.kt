@@ -9,17 +9,17 @@ import kotlin.NoSuchElementException
 
 @Component
 class KoreanNetService(
-    val koreanNetWebClient: WebClient,
-    @Qualifier(value = "xmlMapper")
-    val xmlMapper: ObjectMapper,
+        val koreanNetWebClient: WebClient,
+        @Qualifier(value = "xmlMapper")
+        val xmlMapper: ObjectMapper,
 ) {
     fun getProduct(gtin: String): KoreanNetResponse {
         val response = koreanNetWebClient
-            .get()
-            .uri("/mobileweb/search/barcodeSearchXml/chk/${gtin}")
-            .retrieve()
-            .bodyToMono(String::class.java)
-            .block()
+                .get()
+                .uri("/mobileweb/search/barcodeSearchXml/chk/${gtin}")
+                .retrieve()
+                .bodyToMono(String::class.java)
+                .block()
         val status = xmlMapper.readTree(response).get("status")
         return if (status.asText() != "X") {
             xmlMapper.readValue(response, KoreanNetResponse::class.java)

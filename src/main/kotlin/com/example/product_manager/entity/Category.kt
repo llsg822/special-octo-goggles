@@ -5,7 +5,7 @@ import jakarta.persistence.Id
 
 @Entity
 class Category(
-    @Id
-    val id: String,
-    var name: String?,
+        @Id
+        val id: String,
+        var name: String?,
 )

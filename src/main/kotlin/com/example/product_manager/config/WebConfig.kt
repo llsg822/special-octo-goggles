@@ -20,6 +20,7 @@ class WebConfig {
                 .registerModule(JavaTimeModule())
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     }
+
     @Bean
     fun xmlMapper(): ObjectMapper {
         return XmlMapper()

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
-interface GtinProductRepository: JpaRepository<GtinProduct, String> {
+interface GtinProductRepository : JpaRepository<GtinProduct, String> {
     @Query("SELECT gp FROM GtinProduct gp JOIN FETCH gp.product JOIN FETCH gp.product.category")
     fun findAllWithProduct(): List<GtinProduct>
 }

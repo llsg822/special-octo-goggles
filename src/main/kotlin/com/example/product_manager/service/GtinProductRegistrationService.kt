@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Transactional
 @Service
 class GtinProductRegistrationService(
-    val gtinProductRepository: GtinProductRepository
+        val gtinProductRepository: GtinProductRepository
 ) {
     fun registerGtin(gtinList: List<String>) {
         val alreadyExistGtinSet = gtinProductRepository.findAllById(gtinList)

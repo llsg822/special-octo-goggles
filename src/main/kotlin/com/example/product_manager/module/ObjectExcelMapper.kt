@@ -14,8 +14,8 @@ class ObjectExcelMapper {
         val sheet = workbook.createSheet()
 
         this.setHeaders(sheet, clazz)
-        dataList.forEach {
-            data -> appendRow(sheet, data)
+        dataList.forEach { data ->
+            appendRow(sheet, data)
         }
 
         return workbook

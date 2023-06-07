@@ -35,7 +35,7 @@ class GtinProductSyncService(
             )
             gtinProduct.successToSynchronize(product = newProduct)
             println("${gtinProduct.gtin} 상품 연동이 완료되었습니다.")
-        } catch(_: NoSuchElementException) {
+        } catch (_: NoSuchElementException) {
             gtinProduct.failToSynchronize();
             println("${gtinProduct.gtin} 상품을 연동할 수 없습니다. 수기로 관리해주세요.")
         }

@@ -30,12 +30,12 @@ class ProductController(
 
     @PostMapping("/products/gtin")
     fun registerGtin(
-        @RequestBody gtinList: List<String>
+            @RequestBody gtinList: List<String>
     ): ApiResponse<Nothing> {
         gtinProductRegistrationService.registerGtin(gtinList)
         return ApiResponse(
-            ApiResponseCode.OK,
-            null
+                ApiResponseCode.OK,
+                null
         )
     }
 

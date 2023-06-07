@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Transactional
 @Service
-class CategoryMappingService (
-    val categoryRepository: CategoryRepository
+class CategoryMappingService(
+        val categoryRepository: CategoryRepository
 ) {
     fun registerCategoryMapping(categoryMappingList: List<CategoryMappingRequest>) {
         val categoryMappingRequestMap = categoryMappingList.associateBy({ it.categoryId }, { it })
