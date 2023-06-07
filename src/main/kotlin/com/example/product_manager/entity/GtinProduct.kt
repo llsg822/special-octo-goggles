@@ -11,8 +11,16 @@ class GtinProduct(
     @Id
     val gtin: String,
     @OneToOne(cascade = [CascadeType.PERSIST])
-    var product: Product?,
-    var state: GtinProductSyncState,
-    var synchronizedAt: LocalDateTime?,
+    var product: Product? = null,
+    var state: GtinProductSyncState = GtinProductSyncState.SYNC,
+    var synchronizedAt: LocalDateTime? = null,
 ) {
+    fun successToSynchronize(product: Product) {
+        this.product = product;
+        this.synchronizedAt = LocalDateTime.now();
+    }
+
+    fun failToSynchronize() {
+        this.state = GtinProductSyncState.MANUAL;
+    }
 }

@@ -1,5 +1,6 @@
-package com.example.product_manager.configuration
+package com.example.product_manager.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.ClientRequest
@@ -7,7 +8,12 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriComponentsBuilder
 
 @Configuration
-class WebClientConfig {
+class WebClientConfig(
+        @Value("\${koreanNet.id}")
+        private val koreanNetId: String,
+        @Value("\${koreanNet.pw}")
+        private val koreanNetPw: String,
+) {
     @Bean
     fun koreanNetWebClient(): WebClient {
         return WebClient
@@ -16,13 +22,14 @@ class WebClientConfig {
             .filter { request, next ->
                 val uri = UriComponentsBuilder
                     .fromUri(request.url())
-                    .queryParam("id", "aswemake01")
-                    .queryParam("pw", "aswemake098")
+                    .queryParam("id", koreanNetId)
+                    .queryParam("pw", koreanNetPw)
                     .build()
                     .toUri()
                 val filtered = ClientRequest.from(request)
                     .url(uri)
                     .build()
+                println(filtered.url())
                 next.exchange(filtered)
             }
             .build()

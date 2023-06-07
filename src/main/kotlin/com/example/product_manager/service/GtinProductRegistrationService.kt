@@ -12,7 +12,12 @@ class GtinProductRegistrationService(
     val gtinProductRepository: GtinProductRepository
 ) {
     fun registerGtin(gtinList: List<String>) {
-        val gtinProductList = gtinList.map { gtin -> GtinProduct(gtin, null, GtinProductSyncState.SYNC, null) }
-        gtinProductRepository.saveAll(gtinProductList)
+        val alreadyExistGtinSet = gtinProductRepository.findAllById(gtinList)
+                .map { gtinProduct -> gtinProduct.gtin }
+                .toSet()
+        val newGtinProductList = gtinList
+                .filter { gtin -> !alreadyExistGtinSet.contains(gtin) }
+                .map { gtin -> GtinProduct(gtin = gtin) }
+        gtinProductRepository.saveAll(newGtinProductList)
     }
 }

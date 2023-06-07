@@ -20,9 +20,8 @@ class KoreanNetService(
             .retrieve()
             .bodyToMono(String::class.java)
             .block()
-
         val status = xmlMapper.readTree(response).get("status")
-        return if (status.asText() == "Y") {
+        return if (status.asText() != "X") {
             xmlMapper.readValue(response, KoreanNetResponse::class.java)
         } else {
             throw NoSuchElementException()
