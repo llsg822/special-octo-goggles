@@ -7,6 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
 interface GtinProductRepository : JpaRepository<GtinProduct, String> {
-    @Query("SELECT gp FROM GtinProduct gp JOIN FETCH gp.product JOIN FETCH gp.product.category")
+    @Query("""
+        SELECT gp
+        FROM GtinProduct gp
+        JOIN FETCH gp.product
+        JOIN FETCH gp.product.category
+        JOIN FETCH gp.product.company
+        """)
     fun findAllWithProduct(): List<GtinProduct>
 }

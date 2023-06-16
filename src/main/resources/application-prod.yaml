@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: aswemake
+    password: 6wvTGGrHgEUuJUVvuF64gxxngvffg9cp
+    url: jdbc:mysql://localhost:3306/product-manager
+  jpa:
+    hibernate:
+      ddl-auto: none

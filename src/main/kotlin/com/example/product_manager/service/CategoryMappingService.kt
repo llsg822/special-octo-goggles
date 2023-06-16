@@ -17,11 +17,17 @@ class CategoryMappingService(
 
         categoryMappingRequestMap.forEach { request ->
             categoryMap[request.key]?.let { category ->
-                category.name = request.value.name
+                category.depth1Name = request.value.depth1Name
+                category.depth2Name = request.value.depth2Name
+                category.depth3Name = request.value.depth3Name
+                category.depth4Name = request.value.depth4Name
             } ?: run {
                 val newCategory = Category(
                         id = request.key,
-                        name = request.value.name
+                        depth1Name = request.value.depth1Name,
+                        depth2Name = request.value.depth2Name,
+                        depth3Name = request.value.depth3Name,
+                        depth4Name = request.value.depth4Name,
                 )
                 categoryRepository.save(newCategory)
             }

@@ -19,6 +19,7 @@ class KoreanNetServiceTest(
         // when
         val koreanNetResponse = koreanNetService.getProduct(gtin)
 
+        println(koreanNetResponse)
         // then
         Assertions.assertEquals(koreanNetResponse.status, "Y")
         Assertions.assertEquals(koreanNetResponse.gtin, gtin)
@@ -32,7 +33,8 @@ class KoreanNetServiceTest(
         // then
         Assertions.assertThrows(NoSuchElementException::class.java) {
             // when
-            koreanNetService.getProduct(gtin)
+            val koreanNetResponse = koreanNetService.getProduct(gtin)
+            println(koreanNetResponse)
         }
     }
 

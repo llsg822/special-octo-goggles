@@ -3,6 +3,7 @@ package com.example.product_manager.module
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.stereotype.Component
+import java.lang.reflect.Field
 
 @Component
 class ObjectExcelMapper {
@@ -22,7 +23,7 @@ class ObjectExcelMapper {
     }
 
     private fun <T> setHeaders(sheet: XSSFSheet, clazz: Class<T>) {
-        val fields = clazz.declaredFields
+        val fields = getFieldsWithoutCompanionObject(clazz)
         val headerRow = sheet.createRow(0)
         for ((index, field) in fields.withIndex()) {
             field.isAccessible = true
@@ -32,13 +33,19 @@ class ObjectExcelMapper {
     }
 
     private fun <T> appendRow(sheet: XSSFSheet, element: T) {
-        val fields = element!!::class.java.declaredFields
+        val fields = getFieldsWithoutCompanionObject(element!!::class.java)
         val dataRow = sheet.createRow(sheet.lastRowNum + 1)
         for ((index, field) in fields.withIndex()) {
             field.isAccessible = true
             val cell = dataRow.createCell(index)
             val value = field.get(element)?.toString() ?: ""
             cell.setCellValue(value)
+        }
+    }
+
+    private fun <T> getFieldsWithoutCompanionObject(clazz: Class<T>): List<Field> {
+        return clazz.declaredFields.filter {
+            !it.name.equals("Companion")
         }
     }
 }

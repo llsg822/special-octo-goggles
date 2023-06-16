@@ -1,9 +1,6 @@
 package com.example.product_manager.entity
 
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
@@ -12,15 +9,17 @@ class GtinProduct(
         val gtin: String,
         @OneToOne(cascade = [CascadeType.PERSIST])
         var product: Product? = null,
-        var state: GtinProductSyncState = GtinProductSyncState.SYNC,
+        @Enumerated(value = EnumType.STRING)
+        var state: GtinProductSyncState,
         var synchronizedAt: LocalDateTime? = null,
 ) {
-    fun successToSynchronize(product: Product) {
-        this.product = product;
-        this.synchronizedAt = LocalDateTime.now();
-    }
-
     fun failToSynchronize() {
-        this.state = GtinProductSyncState.MANUAL;
+        this.state = GtinProductSyncState.MANUAL
+        this.synchronizedAt = LocalDateTime.now()
+    }
+    fun successToSynchronize(product: Product) {
+        this.product = product
+        this.state = GtinProductSyncState.SUCCESS
+        this.synchronizedAt = LocalDateTime.now()
     }
 }

@@ -7,5 +7,9 @@ import jakarta.persistence.Id
 class Category(
         @Id
         val id: String,
-        var name: String?,
+        var depth1Name: String? = null,
+        var depth2Name: String? = null,
+        var depth3Name: String? = null,
+        var depth4Name: String? = null,
+        var mappedName: String? = null,
 )

@@ -10,8 +10,13 @@ class GtinProductQueryRepository(
 ) {
     fun findOneToBeSynchronized(): GtinProduct? {
         val query = entityManager
-                .createQuery(
-                        "SELECT gp FROM GtinProduct gp WHERE gp.state = 0 AND gp.product.id IS NULL",
+                .createQuery("""
+                        SELECT gp
+                        FROM GtinProduct gp
+                        WHERE
+                        gp.state = com.example.product_manager.entity.GtinProductSyncState.PENDING
+                        ORDER BY gp.gtin DESC
+                        """,
                         GtinProduct::class.java
                 )
                 .setMaxResults(1)

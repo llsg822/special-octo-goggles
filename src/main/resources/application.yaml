@@ -1,10 +1,6 @@
-spring:
-  jpa:
-    show-sql: true
-  h2:
-    console:
-      enabled: true
-
 koreanNet:
   id: aswemake01
   pw: aswemake098
+spring:
+  jpa:
+    open-in-view: false

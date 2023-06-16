@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import kotlin.NoSuchElementException
 
 @Component
 class KoreanNetService(
@@ -20,11 +19,6 @@ class KoreanNetService(
                 .retrieve()
                 .bodyToMono(String::class.java)
                 .block()
-        val status = xmlMapper.readTree(response).get("status")
-        return if (status.asText() != "X") {
-            xmlMapper.readValue(response, KoreanNetResponse::class.java)
-        } else {
-            throw NoSuchElementException()
-        }
+        return xmlMapper.readValue(response, KoreanNetResponse::class.java)
     }
 }
