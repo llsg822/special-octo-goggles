@@ -10,9 +10,9 @@ interface GtinProductRepository : JpaRepository<GtinProduct, String> {
     @Query("""
         SELECT gp
         FROM GtinProduct gp
-        JOIN FETCH gp.product
-        JOIN FETCH gp.product.category
-        JOIN FETCH gp.product.company
+        LEFT JOIN FETCH gp.product
+        LEFT JOIN FETCH gp.product.category
+        LEFT JOIN FETCH gp.product.company
         """)
     fun findAllWithProduct(): List<GtinProduct>
 }

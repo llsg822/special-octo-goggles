@@ -20,7 +20,7 @@ class GtinProductSyncService(
         val categoryRepository: CategoryRepository,
         val companyRepository: CompanyRepository,
 ) {
-    @Scheduled(fixedDelay = 300)
+//    @Scheduled(fixedDelay = 300)
     fun synchronizeGtinProduct() {
         val gtinProduct = gtinProductQueryRepository.findOneToBeSynchronized() ?: return
         val koreanNetResponse = koreanNetService.getProduct(gtinProduct.gtin)
@@ -30,7 +30,8 @@ class GtinProductSyncService(
                 return
             }
             "Y" -> {}
-            else -> throw IllegalArgumentException()
+            "N" -> {}
+            else -> throw IllegalArgumentException(koreanNetResponse.status)
         }
         val category = koreanNetResponse.kanclasscode?.let {
             categoryRepository.findByIdOrNull(it) ?: run { Category(id = it) }
@@ -58,17 +59,16 @@ fun Product.Companion.of(
         category: Category?,
 ): Product {
     val name = koreanNetResponse.dscrgtink ?: koreanNetResponse.npname
-    val standard = "${koreanNetResponse.netweight}${koreanNetResponse.netweightuom}"
     val taxation = when (koreanNetResponse.stTaxtype?.taxtype) {
         "과세" -> true
         "영세" -> false
         "면세" -> false
-        else -> throw IllegalArgumentException(koreanNetResponse.stTaxtype?.taxtype)
+        null -> null
+        else -> throw IllegalArgumentException(koreanNetResponse.stTaxtype.taxtype)
     }
     return Product(
             name = name,
             company = company,
-            standard = standard,
             imageUrl = koreanNetResponse.imgpath1,
             category = category,
             taxation = taxation,

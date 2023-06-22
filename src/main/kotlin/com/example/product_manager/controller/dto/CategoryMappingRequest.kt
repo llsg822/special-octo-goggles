@@ -6,4 +6,5 @@ data class CategoryMappingRequest(
         val depth2Name: String,
         val depth3Name: String,
         val depth4Name: String,
+        val mappedName: String,
 )

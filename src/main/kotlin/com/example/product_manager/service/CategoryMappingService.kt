@@ -21,6 +21,7 @@ class CategoryMappingService(
                 category.depth2Name = request.value.depth2Name
                 category.depth3Name = request.value.depth3Name
                 category.depth4Name = request.value.depth4Name
+                category.mappedName = request.value.mappedName
             } ?: run {
                 val newCategory = Category(
                         id = request.key,
@@ -28,6 +29,7 @@ class CategoryMappingService(
                         depth2Name = request.value.depth2Name,
                         depth3Name = request.value.depth3Name,
                         depth4Name = request.value.depth4Name,
+                        mappedName = request.value.mappedName,
                 )
                 categoryRepository.save(newCategory)
             }

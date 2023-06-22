@@ -10,7 +10,6 @@ class Product(
         var name: String? = null,
         @ManyToOne(cascade = [CascadeType.PERSIST])
         var company: Company? = null,
-        var standard: String? = null,
         var imageUrl: String? = null,
         @ManyToOne(cascade = [CascadeType.PERSIST])
         var category: Category? = null,
